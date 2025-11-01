@@ -156,7 +156,7 @@ import footerImage from "../assets/foter.svg";
         display: block;
         transform: scaleX(-1);
         object-fit: cover;
-        object-position: bottom top;
+        object-position: bottom center;
     }
 
     /* Pattern overlay at top of hero */
@@ -168,16 +168,17 @@ import footerImage from "../assets/foter.svg";
         z-index: 5;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         padding: 1rem 0;
     }
 
     .pattern-left,
     .pattern-right {
-        flex: 1;
+        flex: 1 1 0;
         height: auto;
         opacity: 0.8;
         mix-blend-mode: color-dodge;
+        min-width: 0;
     }
 
     .arabic-text {
@@ -185,9 +186,9 @@ import footerImage from "../assets/foter.svg";
         font-size: 1.25rem;
         letter-spacing: -0.03em;
         white-space: nowrap;
-        opacity: 0.9;
+        opacity: 0.8;
         mix-blend-mode: color-dodge;
-        flex-shrink: 0;
+        flex: 0 0 auto;
         padding: 0 2rem;
     }
 
@@ -298,7 +299,7 @@ import footerImage from "../assets/foter.svg";
         width: 100%;
         height: auto;
         opacity: 0.8;
-        mix-blend-mode: normal;
+        mix-blend-mode: color-dodge;
         filter: brightness(0) invert(1);
     }
 
@@ -392,7 +393,7 @@ import footerImage from "../assets/foter.svg";
 
         .pattern-left,
         .pattern-right {
-            width: 35%;
+            flex: 1 1 0;
         }
     }
 
@@ -435,12 +436,12 @@ import footerImage from "../assets/foter.svg";
 
         .pattern-overlay {
             gap: 1.5rem;
-            padding: 0.75rem 3%;
+            padding: 0.75rem 0;
         }
 
         .pattern-left,
         .pattern-right {
-            width: 30%;
+            flex: 1 1 0;
         }
 
         .arabic-text {
@@ -499,12 +500,12 @@ import footerImage from "../assets/foter.svg";
 
         .pattern-overlay {
             gap: 1rem;
-            padding: 0.5rem 2%;
+            padding: 0.5rem 0;
         }
 
         .pattern-left,
         .pattern-right {
-            width: 25%;
+            flex: 1 1 0;
         }
 
         .arabic-text {
@@ -536,7 +537,7 @@ import footerImage from "../assets/foter.svg";
 
         .pattern-left,
         .pattern-right {
-            width: 20%;
+            flex: 1 1 0;
         }
 
         .arabic-text {
