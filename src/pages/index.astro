@@ -43,7 +43,7 @@ import footerImage from "../assets/foter.svg";
                     Personalized & <span class="gentle">Gentle</span><br
                     />Fitness for Women in Toronto
                 </h1>
-                <p class="hero-subtext">Finally.</p>
+                <h1 class="hero-subtext">Finally.</h1>
                 <div class="button-wrapper">
                     <button class="cta-button">Book your first Session</button>
                 </div>
@@ -67,9 +67,9 @@ import footerImage from "../assets/foter.svg";
         <!-- Method Section -->
         <section class="content-section">
             <div class="section-title">
-                <Image src={patternImage} alt="" class="title-pattern-left" />
+                <div class="title-pattern-left"></div>
                 <h2>The Salam Wellness Method</h2>
-                <Image src={patternImage} alt="" class="title-pattern-right" />
+                <div class="title-pattern-right"></div>
             </div>
             <p class="body-text">
                 A fusion of Classic fitness - building full body strength<br />
@@ -90,9 +90,9 @@ import footerImage from "../assets/foter.svg";
         <!-- CTA Section -->
         <section class="content-section cta-spacing">
             <div class="section-title">
-                <Image src={patternImage} alt="" class="title-pattern-left" />
+                <div class="title-pattern-left"></div>
                 <h2>Let's Work Together</h2>
-                <Image src={patternImage} alt="" class="title-pattern-right" />
+                <div class="title-pattern-right"></div>
             </div>
             <p class="body-text">
                 Ready to start your wellness journey? Book a free consultation
@@ -274,10 +274,16 @@ import footerImage from "../assets/foter.svg";
         }
     }
 
+    .hero-subtext {
+        margin-top: 1em;
+        margin-bottom: 1em;
+        white-space: nowrap;
+    }
+
     /* Hero content overlay */
     .hero-overlay {
         position: absolute;
-        top: 40%;
+        top: 20%;
         left: 6%;
         z-index: 10;
         max-width: 75%;
@@ -310,7 +316,6 @@ import footerImage from "../assets/foter.svg";
         height: auto;
         margin-bottom: 1rem;
         margin-left: 0;
-        filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
         display: block;
     }
 
@@ -323,20 +328,13 @@ import footerImage from "../assets/foter.svg";
     @media (max-width: 900px) {
         .logo {
             width: 200px;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.8rem;
         }
     }
 
     @media (max-width: 600px) {
         .logo {
             width: 160px;
-            margin-bottom: 1rem;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .logo {
-            width: 140px;
         }
     }
 
@@ -379,41 +377,6 @@ import footerImage from "../assets/foter.svg";
     .gentle {
         font-family: "Nunito", sans-serif;
         font-weight: 200;
-    }
-
-    .hero-subtext {
-        font-size: 3rem;
-        color: #f6ffcd;
-        font-weight: 400;
-        margin-bottom: 2.5rem;
-        letter-spacing: -0.01em;
-        text-align: left;
-    }
-
-    @media (max-width: 1200px) {
-        .hero-subtext {
-            font-size: 2.5rem;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .hero-subtext {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .hero-subtext {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .hero-subtext {
-            font-size: 1.25rem;
-        }
     }
 
     /* CTA Button with Pattern Border */
@@ -615,11 +578,12 @@ import footerImage from "../assets/foter.svg";
         font-size: 1.25rem;
         font-weight: 700;
         color: #171717;
-        margin-top: 8rem;
+        margin-top: 3rem;
         text-align: left;
+        margin-left: auto;
         margin-right: auto;
-        margin-left: 2rem;
-        padding: 0;
+        padding: 0 2rem;
+        max-width: 800px;
     }
 
     .content-section .cta-button {
