@@ -24,21 +24,11 @@ import footerImage from "../assets/foter.svg";
 
             <!-- Pattern and Arabic overlay at top -->
             <div class="pattern-overlay">
-                <Image
-                    src={patternImage}
-                    alt=""
-                    class="pattern-left"
-                    loading="eager"
-                />
+                <div class="pattern-left"></div>
                 <div class="arabic-text">
                     بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
                 </div>
-                <Image
-                    src={patternImage}
-                    alt=""
-                    class="pattern-right"
-                    loading="eager"
-                />
+                <div class="pattern-right"></div>
             </div>
 
             <!-- Hero content overlay -->
@@ -63,9 +53,9 @@ import footerImage from "../assets/foter.svg";
         <!-- About Section -->
         <section class="content-section">
             <div class="section-title">
-                <Image src={patternImage} alt="" class="title-pattern-left" />
+                <div class="title-pattern-left"></div>
                 <h2>My name is Arfa</h2>
-                <Image src={patternImage} alt="" class="title-pattern-right" />
+                <div class="title-pattern-right"></div>
             </div>
             <p class="body-text">
                 I'm a certified personal trainer who specializes in gentle,
@@ -77,9 +67,9 @@ import footerImage from "../assets/foter.svg";
         <!-- Method Section -->
         <section class="content-section">
             <div class="section-title">
-                <Image src={patternImage} alt="" class="title-pattern-left" />
+                <div class="title-pattern-left"></div>
                 <h2>The Salam Wellness Method</h2>
-                <Image src={patternImage} alt="" class="title-pattern-right" />
+                <div class="title-pattern-right"></div>
             </div>
             <p class="body-text">
                 A fusion of Classic fitness - building full body strength<br />
@@ -100,9 +90,9 @@ import footerImage from "../assets/foter.svg";
         <!-- CTA Section -->
         <section class="content-section cta-spacing">
             <div class="section-title">
-                <Image src={patternImage} alt="" class="title-pattern-left" />
+                <div class="title-pattern-left"></div>
                 <h2>Let's Work Together</h2>
-                <Image src={patternImage} alt="" class="title-pattern-right" />
+                <div class="title-pattern-right"></div>
             </div>
             <p class="body-text">
                 Ready to start your wellness journey? Book a free consultation
@@ -166,28 +156,29 @@ import footerImage from "../assets/foter.svg";
         left: 0;
         right: 0;
         z-index: 5;
-        display: grid;
-        grid-template-columns: 1fr auto 1fr;
+        display: flex;
+        justify-content: center;
         align-items: center;
-        gap: 2rem;
         padding: 1rem 0;
     }
 
     .pattern-left,
     .pattern-right {
-        width: 100%;
-        max-width: 250px;
-        height: auto;
+        flex: 1;
+        height: 50px;
+        background-repeat: repeat-x;
+        background-size: auto 50px;
+        background-position: center;
         opacity: 0.8;
         mix-blend-mode: color-dodge;
     }
 
     .pattern-left {
-        justify-self: start;
+        background-image: url("/assets/pattern.svg");
     }
 
     .pattern-right {
-        justify-self: end;
+        background-image: url("/assets/pattern.svg");
     }
 
     .arabic-text {
@@ -198,7 +189,8 @@ import footerImage from "../assets/foter.svg";
         opacity: 0.9;
         mix-blend-mode: color-dodge;
         text-align: center;
-        padding: 0 1rem;
+        padding: 0 2rem;
+        flex-shrink: 0;
     }
 
     /* Hero content overlay */
@@ -290,10 +282,9 @@ import footerImage from "../assets/foter.svg";
     }
 
     .section-title {
-        display: grid;
-        grid-template-columns: 1fr auto 1fr;
+        display: flex;
+        justify-content: center;
         align-items: center;
-        gap: 2rem;
         margin-bottom: 2rem;
         width: 100vw;
         position: relative;
@@ -305,20 +296,22 @@ import footerImage from "../assets/foter.svg";
 
     .title-pattern-left,
     .title-pattern-right {
-        width: 100%;
-        max-width: 250px;
-        height: auto;
+        flex: 1;
+        height: 50px;
+        background-repeat: repeat-x;
+        background-size: auto 50px;
+        background-position: center;
         opacity: 0.8;
         mix-blend-mode: normal;
         filter: brightness(0) invert(1);
     }
 
     .title-pattern-left {
-        justify-self: start;
+        background-image: url("/assets/pattern.svg");
     }
 
     .title-pattern-right {
-        justify-self: end;
+        background-image: url("/assets/pattern.svg");
     }
 
     h2 {
@@ -329,6 +322,9 @@ import footerImage from "../assets/foter.svg";
         line-height: 1.5;
         margin: 0;
         white-space: nowrap;
+        text-align: center;
+        padding: 0 2rem;
+        flex-shrink: 0;
     }
 
     .subsection-title {
@@ -336,12 +332,10 @@ import footerImage from "../assets/foter.svg";
         font-weight: 700;
         color: #171717;
         margin-top: 8rem;
-        margin-bottom: 8rem;
-        text-align: center;
-        max-width: 800px;
-        margin-left: auto;
+        text-align: left;
         margin-right: auto;
-        padding: 0 2rem;
+        margin-left: 2rem;
+        padding: 0;
     }
 
     .content-section .cta-button {
@@ -411,12 +405,12 @@ import footerImage from "../assets/foter.svg";
 
         .pattern-left,
         .pattern-right {
-            max-width: 200px;
+            max-width: 350px;
         }
 
         .title-pattern-left,
         .title-pattern-right {
-            max-width: 200px;
+            max-width: 350px;
         }
     }
 
@@ -464,12 +458,12 @@ import footerImage from "../assets/foter.svg";
 
         .pattern-left,
         .pattern-right {
-            max-width: 150px;
+            max-width: 250px;
         }
 
         .title-pattern-left,
         .title-pattern-right {
-            max-width: 150px;
+            max-width: 250px;
         }
 
         .arabic-text {
@@ -533,12 +527,12 @@ import footerImage from "../assets/foter.svg";
 
         .pattern-left,
         .pattern-right {
-            max-width: 100px;
+            max-width: 180px;
         }
 
         .title-pattern-left,
         .title-pattern-right {
-            max-width: 100px;
+            max-width: 180px;
         }
 
         .arabic-text {
@@ -570,12 +564,12 @@ import footerImage from "../assets/foter.svg";
 
         .pattern-left,
         .pattern-right {
-            max-width: 80px;
+            max-width: 120px;
         }
 
         .title-pattern-left,
         .title-pattern-right {
-            max-width: 80px;
+            max-width: 120px;
         }
 
         .arabic-text {
