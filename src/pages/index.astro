@@ -15,20 +15,40 @@ import footerImage from "../assets/foter.svg";
     <main>
         <!-- Hero Section - Full Bleed with Pattern on Top -->
         <section class="hero">
-            <Image src={heroImage} alt="Fitness studio" class="hero-image" />
+            <Image
+                src={heroImage}
+                alt="Fitness studio"
+                class="hero-image"
+                loading="eager"
+            />
 
             <!-- Pattern and Arabic overlay at top -->
             <div class="pattern-overlay">
-                <Image src={patternImage} alt="" class="pattern-left" />
+                <Image
+                    src={patternImage}
+                    alt=""
+                    class="pattern-left"
+                    loading="eager"
+                />
                 <div class="arabic-text">
                     بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
                 </div>
-                <Image src={patternImage} alt="" class="pattern-right" />
+                <Image
+                    src={patternImage}
+                    alt=""
+                    class="pattern-right"
+                    loading="eager"
+                />
             </div>
 
             <!-- Hero content overlay -->
             <div class="hero-overlay">
-                <Image src={logoImage} alt="Salam Wellbeing" class="logo" />
+                <Image
+                    src={logoImage}
+                    alt="Salam Wellbeing"
+                    class="logo"
+                    loading="eager"
+                />
                 <h1>
                     Personalized & <span class="gentle">Gentle</span><br
                     />Fitness for Women in Toronto
@@ -177,7 +197,7 @@ import footerImage from "../assets/foter.svg";
         top: 18%;
         left: 6%;
         z-index: 10;
-        max-width: 50%;
+        max-width: 75%;
     }
 
     .logo {
@@ -351,7 +371,7 @@ import footerImage from "../assets/foter.svg";
     /* Responsive Design */
     @media (max-width: 1200px) {
         .hero-overlay {
-            max-width: 55%;
+            max-width: 75%;
         }
 
         .logo {
@@ -378,7 +398,7 @@ import footerImage from "../assets/foter.svg";
 
     @media (max-width: 900px) {
         .hero-overlay {
-            max-width: 60%;
+            max-width: 75%;
             top: 12%;
             left: 5%;
         }
