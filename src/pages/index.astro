@@ -1,5 +1,12 @@
 ---
 import Layout from "../components/Layout.astro";
+import { Image } from "astro:assets";
+
+// Import images
+import heroImage from "../assets/hero.png";
+import logoImage from "../assets/logo.svg";
+import patternImage from "../assets/pattern.svg";
+import footerImage from "../assets/foter.svg";
 ---
 
 <Layout
@@ -8,28 +15,20 @@ import Layout from "../components/Layout.astro";
     <main>
         <!-- Hero Section - Full Bleed with Pattern on Top -->
         <section class="hero">
-            <img
-                src="/assets/hero.png"
-                alt="Fitness studio"
-                class="hero-image"
-            />
+            <Image src={heroImage} alt="Fitness studio" class="hero-image" />
 
             <!-- Pattern and Arabic overlay at top -->
             <div class="pattern-overlay">
-                <img src="/assets/pattern.svg" alt="" class="pattern-left" />
+                <Image src={patternImage} alt="" class="pattern-left" />
                 <div class="arabic-text">
                     بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
                 </div>
-                <img src="/assets/pattern.svg" alt="" class="pattern-right" />
+                <Image src={patternImage} alt="" class="pattern-right" />
             </div>
 
             <!-- Hero content overlay -->
             <div class="hero-overlay">
-                <img
-                    src="/assets/logo.svg"
-                    alt="Salam Wellbeing"
-                    class="logo"
-                />
+                <Image src={logoImage} alt="Salam Wellbeing" class="logo" />
                 <h1>
                     Personalized & <span class="gentle">Gentle</span><br
                     />Fitness for Women in Toronto
@@ -44,17 +43,9 @@ import Layout from "../components/Layout.astro";
         <!-- About Section -->
         <section class="content-section">
             <div class="section-title">
-                <img
-                    src="/assets/pattern.svg"
-                    alt=""
-                    class="title-pattern-left"
-                />
+                <Image src={patternImage} alt="" class="title-pattern-left" />
                 <h2>My name is Arfa</h2>
-                <img
-                    src="/assets/pattern.svg"
-                    alt=""
-                    class="title-pattern-right"
-                />
+                <Image src={patternImage} alt="" class="title-pattern-right" />
             </div>
             <p class="body-text">
                 I'm a certified personal trainer who specializes in gentle,
@@ -66,17 +57,9 @@ import Layout from "../components/Layout.astro";
         <!-- Method Section -->
         <section class="content-section">
             <div class="section-title">
-                <img
-                    src="/assets/pattern.svg"
-                    alt=""
-                    class="title-pattern-left"
-                />
+                <Image src={patternImage} alt="" class="title-pattern-left" />
                 <h2>The Salam Wellness Method</h2>
-                <img
-                    src="/assets/pattern.svg"
-                    alt=""
-                    class="title-pattern-right"
-                />
+                <Image src={patternImage} alt="" class="title-pattern-right" />
             </div>
             <p class="body-text">
                 A fusion of Classic fitness - building full body strength<br />
@@ -97,17 +80,9 @@ import Layout from "../components/Layout.astro";
         <!-- CTA Section -->
         <section class="content-section cta-spacing">
             <div class="section-title">
-                <img
-                    src="/assets/pattern.svg"
-                    alt=""
-                    class="title-pattern-left"
-                />
+                <Image src={patternImage} alt="" class="title-pattern-left" />
                 <h2>Let's Work Together</h2>
-                <img
-                    src="/assets/pattern.svg"
-                    alt=""
-                    class="title-pattern-right"
-                />
+                <Image src={patternImage} alt="" class="title-pattern-right" />
             </div>
             <p class="body-text">
                 Ready to start your wellness journey? Book a free consultation
@@ -123,7 +98,7 @@ import Layout from "../components/Layout.astro";
 
         <!-- Footer -->
         <footer class="footer">
-            <img src="/assets/foter.svg" alt="Salam" class="footer-logo" />
+            <Image src={footerImage} alt="Salam" class="footer-logo" />
         </footer>
     </main>
 </Layout>
