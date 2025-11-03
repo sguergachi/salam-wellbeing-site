@@ -1,12 +1,28 @@
 ---
 import Layout from "../components/Layout.astro";
 import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 
 // Import images
 import heroImage from "../assets/hero.png";
 import logoImage from "../assets/logo.svg";
 import patternImage from "../assets/pattern.svg";
 import footerImage from "../assets/foter.svg";
+
+// Get all sections and sort by order
+const sections = await getCollection("sections");
+const sortedSections = sections.sort((a, b) => a.data.order - b.data.order);
+
+// Get specific sections for easy access
+const heroSection = sortedSections.find(s => s.id === "hero.mdx");
+const aboutSection = sortedSections.find(s => s.id === "about.mdx");
+const methodSection = sortedSections.find(s => s.id === "method.mdx");
+const ctaSection = sortedSections.find(s => s.id === "cta.mdx");
+
+// Render the content
+const { Content: AboutContent } = aboutSection ? await aboutSection.render() : { Content: null };
+const { Content: MethodContent } = methodSection ? await methodSection.render() : { Content: null };
+const { Content: CtaContent } = ctaSection ? await ctaSection.render() : { Content: null };
 ---
 
 <Layout
@@ -26,7 +42,7 @@ import footerImage from "../assets/foter.svg";
             <div class="pattern-overlay">
                 <div class="pattern-left"></div>
                 <div class="arabic-text">
-                    بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
+                    {heroSection?.data.arabicText}
                 </div>
                 <div class="pattern-right"></div>
             </div>
@@ -45,66 +61,58 @@ import footerImage from "../assets/foter.svg";
                 </h1>
                 <h1 class="hero-subtext">Finally.</h1>
                 <div class="button-wrapper">
-                    <button class="cta-button">Book your first Session</button>
+                    <button class="cta-button">{heroSection?.data.ctaButtonText}</button>
                 </div>
             </div>
         </section>
 
         <!-- About Section -->
-        <section class="content-section">
-            <div class="section-title">
-                <div class="title-pattern-left"></div>
-                <h2>My name is Arfa</h2>
-                <div class="title-pattern-right"></div>
-            </div>
-            <p class="body-text">
-                I'm a certified personal trainer who specializes in gentle,
-                personalized fitness for women. My approach focuses on building
-                sustainable habits that honor your body and your life.
-            </p>
-        </section>
+        {aboutSection && AboutContent && (
+            <section class="content-section">
+                <div class="section-title">
+                    <div class="title-pattern-left"></div>
+                    <h2>{aboutSection.data.title}</h2>
+                    <div class="title-pattern-right"></div>
+                </div>
+                <div class="body-text">
+                    <AboutContent />
+                </div>
+            </section>
+        )}
 
         <!-- Method Section -->
-        <section class="content-section">
-            <div class="section-title">
-                <div class="title-pattern-left"></div>
-                <h2>The Salam Wellness Method</h2>
-                <div class="title-pattern-right"></div>
-            </div>
-            <p class="body-text">
-                A fusion of Classic fitness - building full body strength<br />
-                Mat Pilates - deep core strength, stability, muscle awareness, body
-                control Mobility and Stretch (30%) - joint health, reducing tightness/stiffness
-                from body
-            </p>
-            <h3 class="subsection-title">What I offer</h3>
-            <p class="body-text">
-                Women Only Group Fitness Classes using the Salam Wellness
-                Method.<br />
-                Women Only Private Clients: A more strategic and personalized plan
-                is made with specific goals in mind. 1:1 or up to a max group of
-                4.
-            </p>
-        </section>
+        {methodSection && MethodContent && (
+            <section class="content-section">
+                <div class="section-title">
+                    <div class="title-pattern-left"></div>
+                    <h2>{methodSection.data.title}</h2>
+                    <div class="title-pattern-right"></div>
+                </div>
+                <div class="body-text">
+                    <MethodContent />
+                </div>
+            </section>
+        )}
 
         <!-- CTA Section -->
-        <section class="content-section cta-spacing">
-            <div class="section-title">
-                <div class="title-pattern-left"></div>
-                <h2>Let's Work Together</h2>
-                <div class="title-pattern-right"></div>
-            </div>
-            <p class="body-text">
-                Ready to start your wellness journey? Book a free consultation
-                call and let's discuss how we can work together.
-            </p>
-            <div class="button-center">
-                <div class="button-wrapper">
-                    <div class="button-pattern-bg"></div>
-                    <button class="cta-button">Setup a Call</button>
+        {ctaSection && CtaContent && (
+            <section class="content-section cta-spacing">
+                <div class="section-title">
+                    <div class="title-pattern-left"></div>
+                    <h2>{ctaSection.data.title}</h2>
+                    <div class="title-pattern-right"></div>
                 </div>
-            </div>
-        </section>
+                <div class="body-text">
+                    <CtaContent />
+                </div>
+                <div class="button-center">
+                    <div class="button-wrapper">
+                        <div class="button-pattern-bg"></div>
+                        <button class="cta-button">{ctaSection.data.ctaButtonText}</button>
+                    </div>
+                </div>
+            </section>
+        )}
 
         <!-- Footer -->
         <footer class="footer">
@@ -642,6 +650,38 @@ import footerImage from "../assets/foter.svg";
 
     .subsection-title + .body-text {
         margin-top: 0;
+    }
+
+    /* MDX Content Styles */
+    .body-text :global(h3) {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #171717;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+    .body-text :global(p) {
+        margin-bottom: 1rem;
+    }
+
+    .body-text :global(p:last-child) {
+        margin-bottom: 0;
+    }
+
+    .body-text :global(strong) {
+        font-weight: 700;
+    }
+
+    .body-text :global(em) {
+        font-style: italic;
+    }
+
+    .body-text :global(br) {
+        display: block;
+        content: "";
+        margin-top: 0.5rem;
     }
 
     /* Footer */
