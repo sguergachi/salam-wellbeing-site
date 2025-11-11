@@ -1,5 +1,5 @@
 ---
-# title: "My Philosophy"
+title: "My Philosophy"
 order: 4
 ---
 
