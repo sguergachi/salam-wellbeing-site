@@ -1,5 +1,5 @@
 ---
-title: "My Philosophy"
+## title: "My Philosophy"
 order: 4
 ---
 
@@ -14,4 +14,4 @@ Our body has a right over us.
 
 Prayer requires healthy joints and flexibility to move and hold postures with ease. Hajj (pilgrimage) requires cardiorespiratory endurance, strong legs, and physical resilience.  Fasting is easier with proper nourishment, no nutrient deficiencies, and balanced blood sugar. 
 
-The above is a snippiet; in so many ways, the sunnah way of life encourages us to live healthy and well lives.
+Here we see how even a few pillars of Islam encourage us to live healthy and well lives in order to fulfill them in the best way. This is just the tip of a beautiful iceberg - when we live a Sunnah way of life, it makes us healthier... *and being healthy helps us live the tradition with* ***Ihsan:*** *with excellence*.
