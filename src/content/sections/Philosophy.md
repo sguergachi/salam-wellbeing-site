@@ -1,6 +1,7 @@
 ---
-## title: "My Philosophy"
+title: "My Philosophy"
 order: 4
+template: "content"
 ---
 
 When we take a moment to reflect, we see how the human body is truly incredible, سُـبْحانَ الله. I’ve witnessed how with the right inputs, a stiff body can become mobile, a weak body can become strong, and a sick body can begin to heal, بِإِذْنِ اللَّه . No one is too old, too unfit or has too many health challenges to start (or continue) exercising. 

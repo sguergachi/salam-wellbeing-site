@@ -2,6 +2,7 @@
 import Layout from "../components/Layout.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 // Import images
 import heroImage from "../assets/hero.png";
@@ -11,108 +12,113 @@ import footerImage from "../assets/foter.svg";
 
 // Get all sections and sort by order
 const sections = await getCollection("sections");
-const sortedSections = sections.sort((a, b) => a.data.order - b.data.order);
+const sortedSections = sections.sort(
+    (a: CollectionEntry<"sections">, b: CollectionEntry<"sections">) =>
+        a.data.order - b.data.order,
+);
 
-// Get specific sections for easy access
-const heroSection = sortedSections.find(s => s.id === "hero.mdx");
-const aboutSection = sortedSections.find(s => s.id === "about.mdx");
-const methodSection = sortedSections.find(s => s.id === "method.mdx");
-const ctaSection = sortedSections.find(s => s.id === "cta.mdx");
+// Type for rendered sections
+type RenderedSection = CollectionEntry<"sections"> & {
+    Content: any;
+};
 
-// Render the content
-const { Content: AboutContent } = aboutSection ? await aboutSection.render() : { Content: null };
-const { Content: MethodContent } = methodSection ? await methodSection.render() : { Content: null };
-const { Content: CtaContent } = ctaSection ? await ctaSection.render() : { Content: null };
+// Render all sections
+const renderedSections: RenderedSection[] = await Promise.all(
+    sortedSections.map(async (section: CollectionEntry<"sections">) => {
+        const { Content } = await section.render();
+        return {
+            ...section,
+            Content,
+        };
+    }),
+);
 ---
 
 <Layout
     title="Salam Wellbeing - Personalized & Gentle Fitness for Women in Toronto"
 >
     <main>
-        <!-- Hero Section - Full Bleed with Pattern on Top -->
-        <section class="hero">
-            <Image
-                src={heroImage}
-                alt="Fitness studio"
-                class="hero-image"
-                loading="eager"
-            />
+        {
+            renderedSections.map((section: RenderedSection) => {
+                const { data, Content } = section;
 
-            <!-- Pattern and Arabic overlay at top -->
-            <div class="pattern-overlay">
-                <div class="pattern-left"></div>
-                <div class="arabic-text">
-                    {heroSection?.data.arabicText}
-                </div>
-                <div class="pattern-right"></div>
-            </div>
+                if (data.template === "hero") {
+                    return (
+                        <section class="hero">
+                            <Image
+                                src={heroImage}
+                                alt="Fitness studio"
+                                class="hero-image"
+                                loading="eager"
+                            />
 
-            <!-- Hero content overlay -->
-            <div class="hero-overlay">
-                <Image
-                    src={logoImage}
-                    alt="Salam Wellbeing"
-                    class="logo"
-                    loading="eager"
-                />
-                <h1>
-                    Personalized & <span class="gentle">Gentle</span><br
-                    />Fitness for Women in Toronto
-                </h1>
-                <h1 class="hero-subtext">Finally.</h1>
-                <div class="button-wrapper">
-                    <button class="cta-button">{heroSection?.data.ctaButtonText}</button>
-                </div>
-            </div>
-        </section>
+                            <div class="pattern-overlay">
+                                <div class="pattern-left" />
+                                <div class="arabic-text">{data.arabicText}</div>
+                                <div class="pattern-right" />
+                            </div>
 
-        <!-- About Section -->
-        {aboutSection && AboutContent && (
-            <section class="content-section">
-                <div class="section-title">
-                    <div class="title-pattern-left"></div>
-                    <h2>{aboutSection.data.title}</h2>
-                    <div class="title-pattern-right"></div>
-                </div>
-                <div class="body-text">
-                    <AboutContent />
-                </div>
-            </section>
-        )}
-
-        <!-- Method Section -->
-        {methodSection && MethodContent && (
-            <section class="content-section">
-                <div class="section-title">
-                    <div class="title-pattern-left"></div>
-                    <h2>{methodSection.data.title}</h2>
-                    <div class="title-pattern-right"></div>
-                </div>
-                <div class="body-text">
-                    <MethodContent />
-                </div>
-            </section>
-        )}
-
-        <!-- CTA Section -->
-        {ctaSection && CtaContent && (
-            <section class="content-section cta-spacing">
-                <div class="section-title">
-                    <div class="title-pattern-left"></div>
-                    <h2>{ctaSection.data.title}</h2>
-                    <div class="title-pattern-right"></div>
-                </div>
-                <div class="body-text">
-                    <CtaContent />
-                </div>
-                <div class="button-center">
-                    <div class="button-wrapper">
-                        <div class="button-pattern-bg"></div>
-                        <button class="cta-button">{ctaSection.data.ctaButtonText}</button>
-                    </div>
-                </div>
-            </section>
-        )}
+                            <div class="hero-overlay">
+                                <Image
+                                    src={logoImage}
+                                    alt="Salam Wellbeing"
+                                    class="logo"
+                                    loading="eager"
+                                />
+                                <h1>
+                                    Personalized &{" "}
+                                    <>
+                                        <span class="gentle">Gentle</span>
+                                        <br />
+                                    </>
+                                    Fitness for Women in Toronto
+                                </h1>
+                                <h1 class="hero-subtext">Finally.</h1>
+                                <div class="button-wrapper">
+                                    <button class="cta-button">
+                                        {data.ctaButtonText}
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                } else if (data.template === "cta") {
+                    return (
+                        <section class="content-section cta-spacing">
+                            <div class="section-title">
+                                <div class="title-pattern-left" />
+                                <h2>{data.title}</h2>
+                                <div class="title-pattern-right" />
+                            </div>
+                            <div class="body-text">
+                                <Content />
+                            </div>
+                            <div class="button-center">
+                                <div class="button-wrapper">
+                                    <div class="button-pattern-bg" />
+                                    <button class="cta-button">
+                                        {data.ctaButtonText}
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                } else {
+                    return (
+                        <section class="content-section">
+                            <div class="section-title">
+                                <div class="title-pattern-left" />
+                                <h2>{data.title}</h2>
+                                <div class="title-pattern-right" />
+                            </div>
+                            <div class="body-text">
+                                <Content />
+                            </div>
+                        </section>
+                    );
+                }
+            })
+        }
 
         <!-- Footer -->
         <footer class="footer">
