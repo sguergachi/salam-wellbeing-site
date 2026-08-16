@@ -75,9 +75,9 @@ const renderedSections: RenderedSection[] = await Promise.all(
                                 </h1>
                                 <h1 class="hero-subtext">Finally.</h1>
                                 <div class="button-wrapper">
-                                    <button class="cta-button">
+                                    <a href={data.ctaButtonLink} class="cta-button">
                                         {data.ctaButtonText}
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </section>
@@ -96,9 +96,9 @@ const renderedSections: RenderedSection[] = await Promise.all(
                             <div class="button-center">
                                 <div class="button-wrapper">
                                     <div class="button-pattern-bg" />
-                                    <button class="cta-button">
+                                    <a href={data.ctaButtonLink} class="cta-button">
                                         {data.ctaButtonText}
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </section>
@@ -435,6 +435,7 @@ const renderedSections: RenderedSection[] = await Promise.all(
         box-shadow:
             inset 0 0 0 8px #f6543e,
             inset 0 0 0 10px #f6ffcd;
+        text-decoration: none;
     }
 
     @media (max-width: 600px) {
