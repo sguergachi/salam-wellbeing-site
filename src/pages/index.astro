@@ -205,7 +205,20 @@ const renderedSections: RenderedSection[] = await Promise.all(
     @media (max-width:600px){ .arabic-text{ font-size:0.875rem; letter-spacing:0.12em; } }
     @media (max-width:400px){ .arabic-text{ font-size:0.75rem;} }
 
-    .hero-subtext{ margin-top: calc(var(--rhythm) * 0.25); margin-bottom: calc(var(--rhythm) * 0.5); white-space: nowrap; font-weight: var(--lead-weight); }
+    /* Make the "Finally." line more dramatic by increasing the space above it on desktop/tablet,
+       but keep the spacing reasonable on smaller screens. */
+    .hero-subtext{
+        margin-top: calc(var(--rhythm) * 1.5); /* larger dramatic gap */
+        margin-bottom: calc(var(--rhythm) * 0.5);
+        white-space: nowrap;
+        font-weight: var(--lead-weight);
+    }
+    @media (max-width: 900px) {
+        .hero-subtext { margin-top: calc(var(--rhythm) * 0.8); }
+    }
+    @media (max-width: 600px) {
+        .hero-subtext { margin-top: calc(var(--rhythm) * 0.3); }
+    }
 
     /* Hero content overlay */
     .hero-overlay{ position:absolute; top:20%; left:6%; z-index:10; max-width:75%; }
