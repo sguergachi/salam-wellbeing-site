@@ -128,7 +128,25 @@ const renderedSections: RenderedSection[] = await Promise.all(
 </Layout>
 
 <style>
-    @import url("https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Nunito:wght@200&display=swap");
+    /* Improved typography:
+       - Use a readable sans for body text (Inter) and Tenor Sans for display headings.
+       - Use CSS variables and responsive sizes with clamp() for better scaling.
+       - Increase line-height and adjust letter-spacing for better legibility.
+    */
+
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito:wght@200;400;700&family=Tenor+Sans&display=swap");
+
+    :root {
+        --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+        --font-display: "Tenor Sans", Georgia, "Times New Roman", serif;
+        --font-accent: "Nunito", var(--font-sans);
+
+        --color-text: #171717;
+        --color-muted: rgba(23, 23, 23, 0.9);
+
+        --fs-base: 1rem; /* 16px */
+        --leading-base: 1.6;
+    }
 
     * {
         margin: 0;
@@ -137,7 +155,12 @@ const renderedSections: RenderedSection[] = await Promise.all(
     }
 
     main {
-        font-family: "Tenor Sans", serif;
+        font-family: var(--font-sans);
+        font-size: var(--fs-base);
+        line-height: var(--leading-base);
+        color: var(--color-text);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
         background: radial-gradient(
             ellipse at bottom,
             #ffffff 0%,
@@ -214,30 +237,6 @@ const renderedSections: RenderedSection[] = await Promise.all(
         mix-blend-mode: color-dodge;
     }
 
-    @media (max-width: 1200px) {
-        .pattern-right {
-            max-width: 350px;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .pattern-right {
-            max-width: 250px;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .pattern-right {
-            max-width: 180px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .pattern-right {
-            max-width: 120px;
-        }
-    }
-
     .pattern-left {
         background-image: url("/assets/pattern.svg");
     }
@@ -246,36 +245,12 @@ const renderedSections: RenderedSection[] = await Promise.all(
         background-image: url("/assets/pattern.svg");
     }
 
-    @media (max-width: 1200px) {
-        .pattern-right {
-            max-width: 350px;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .pattern-right {
-            max-width: 250px;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .pattern-right {
-            max-width: 180px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .pattern-right {
-            max-width: 120px;
-        }
-    }
-
     .arabic-text {
         color: #f6ffcd;
         font-size: 1.25rem;
-        letter-spacing: -0.03em;
+        letter-spacing: normal; /* Arabic scripts generally look better without negative tracking */
         white-space: nowrap;
-        opacity: 0.9;
+        opacity: 0.95;
         mix-blend-mode: color-dodge;
         text-align: center;
         padding: 0 2rem;
@@ -305,6 +280,7 @@ const renderedSections: RenderedSection[] = await Promise.all(
         margin-top: 1em;
         margin-bottom: 1em;
         white-space: nowrap;
+        font-weight: 600;
     }
 
     /* Hero content overlay */
@@ -366,44 +342,27 @@ const renderedSections: RenderedSection[] = await Promise.all(
     }
 
     h1 {
-        font-size: 3rem;
+        /* Use clamp for responsive scaling and Tenor Sans for display */
+        font-family: var(--font-display);
         font-weight: 400;
-        line-height: 1.2;
+        font-size: clamp(1.5rem, 2.2vw + 1.2rem, 3rem);
+        line-height: 1.15;
         color: #f6ffcd;
         margin-bottom: 1rem;
         letter-spacing: -0.01em;
         text-align: left;
     }
 
-    @media (max-width: 1200px) {
-        h1 {
-            font-size: 2.75rem;
-        }
-    }
-
-    @media (max-width: 900px) {
-        h1 {
-            font-size: 2.2rem;
-        }
-    }
-
     @media (max-width: 600px) {
         h1 {
-            font-size: 1.7rem;
-            line-height: 1.25;
             margin-bottom: 0.5rem;
         }
     }
 
-    @media (max-width: 400px) {
-        h1 {
-            font-size: 1.5rem;
-        }
-    }
-
     .gentle {
-        font-family: "Nunito", sans-serif;
-        font-weight: 200;
+        font-family: var(--font-accent);
+        font-weight: 600; /* give the word Gentle a slightly stronger weight for emphasis */
+        font-style: normal;
     }
 
     /* CTA Button with Pattern Border */
@@ -426,12 +385,13 @@ const renderedSections: RenderedSection[] = await Promise.all(
         color: #ffffff;
         border: none;
         padding: 1.1rem 3rem;
-        font-size: 1.2rem;
-        font-family: "Tenor Sans", serif;
+        font-size: 1.1rem;
+        font-family: var(--font-display);
+        font-weight: 400;
         cursor: pointer;
         transition: background 0.3s ease;
-        letter-spacing: 0.03em;
-        display: block;
+        letter-spacing: 0.02em;
+        display: inline-block;
         box-shadow:
             inset 0 0 0 8px #f6543e,
             inset 0 0 0 10px #f6ffcd;
@@ -509,30 +469,6 @@ const renderedSections: RenderedSection[] = await Promise.all(
         filter: brightness(0) invert(1);
     }
 
-    @media (max-width: 1200px) {
-        .title-pattern-right {
-            max-width: 350px;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .title-pattern-right {
-            max-width: 250px;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .title-pattern-right {
-            max-width: 180px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .title-pattern-right {
-            max-width: 120px;
-        }
-    }
-
     .title-pattern-left {
         background-image: url("/assets/pattern.svg");
     }
@@ -541,36 +477,13 @@ const renderedSections: RenderedSection[] = await Promise.all(
         background-image: url("/assets/pattern.svg");
     }
 
-    @media (max-width: 1200px) {
-        .title-pattern-right {
-            max-width: 350px;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .title-pattern-right {
-            max-width: 250px;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .title-pattern-right {
-            max-width: 180px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .title-pattern-right {
-            max-width: 120px;
-        }
-    }
-
     h2 {
-        font-size: 2.5rem;
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 1.6vw + 1.1rem, 2.5rem);
         font-weight: 400;
-        letter-spacing: 0.03em;
-        color: #171717;
-        line-height: 1.5;
+        letter-spacing: 0.02em;
+        color: var(--color-text);
+        line-height: 1.25;
         margin: 0;
         white-space: nowrap;
         text-align: center;
@@ -578,34 +491,10 @@ const renderedSections: RenderedSection[] = await Promise.all(
         flex-shrink: 0;
     }
 
-    @media (max-width: 1200px) {
-        h2 {
-            font-size: 2.25rem;
-        }
-    }
-
-    @media (max-width: 900px) {
-        h2 {
-            font-size: 2rem;
-        }
-    }
-
-    @media (max-width: 600px) {
-        h2 {
-            font-size: 1.75rem;
-        }
-    }
-
-    @media (max-width: 400px) {
-        h2 {
-            font-size: 1.5rem;
-        }
-    }
-
     .subsection-title {
         font-size: 1.25rem;
         font-weight: 700;
-        color: #171717;
+        color: var(--color-text);
         margin-top: 3rem;
         text-align: left;
         margin-left: auto;
@@ -619,12 +508,11 @@ const renderedSections: RenderedSection[] = await Promise.all(
     }
 
     .body-text {
-        font-size: 1.125rem;
-        line-height: 1.8;
-        color: #171717;
+        font-size: clamp(0.95rem, 1rem + 0.2vw, 1.125rem);
+        line-height: 1.75; /* improve readability for long lines */
+        color: var(--color-muted);
         margin-bottom: 2.5rem;
         letter-spacing: 0.01em;
-        opacity: 0.9;
         max-width: 800px;
         margin-left: auto;
         margin-right: auto;
@@ -663,7 +551,7 @@ const renderedSections: RenderedSection[] = await Promise.all(
     .body-text :global(h3) {
         font-size: 1.25rem;
         font-weight: 700;
-        color: #171717;
+        color: var(--color-text);
         margin-top: 3rem;
         margin-bottom: 1rem;
         text-align: left;
