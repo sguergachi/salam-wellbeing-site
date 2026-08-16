@@ -128,24 +128,24 @@ const renderedSections: RenderedSection[] = await Promise.all(
 </Layout>
 
 <style>
-    /* Improved typography:
-       - Use a readable sans for body text (Inter) and Tenor Sans for display headings.
-       - Use CSS variables and responsive sizes with clamp() for better scaling.
-       - Increase line-height and adjust letter-spacing for better legibility.
+    /* Typography fixes while keeping your fonts (Tenor Sans + Nunito).
+       Changes focus on vertical rhythm, measure, line-height, spacing, weights, and legibility.
     */
 
-    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito:wght@200;400;700&family=Tenor+Sans&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Nunito:wght@200&display=swap");
 
     :root {
-        --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-        --font-display: "Tenor Sans", Georgia, "Times New Roman", serif;
-        --font-accent: "Nunito", var(--font-sans);
+        --fs-base: 1rem; /* 16px */
+        --lh-base: 1.7; /* base line-height */
+        --rhythm: calc(var(--fs-base) * var(--lh-base)); /* baseline rhythm */
+
+        --measure: 65ch; /* optimal measure for readability */
 
         --color-text: #171717;
-        --color-muted: rgba(23, 23, 23, 0.9);
+        --color-muted: rgba(23, 23, 23, 0.92);
 
-        --fs-base: 1rem; /* 16px */
-        --leading-base: 1.6;
+        --heading-weight: 400;
+        --lead-weight: 600;
     }
 
     * {
@@ -155,9 +155,9 @@ const renderedSections: RenderedSection[] = await Promise.all(
     }
 
     main {
-        font-family: var(--font-sans);
+        font-family: "Tenor Sans", serif; /* keep your chosen brand font */
         font-size: var(--fs-base);
-        line-height: var(--leading-base);
+        line-height: var(--lh-base);
         color: var(--color-text);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -167,438 +167,155 @@ const renderedSections: RenderedSection[] = await Promise.all(
             #fdc9a4 100%
         );
         min-height: 100vh;
+        text-rendering: optimizeLegibility;
     }
+
+    /* Baseline helpers to keep vertical rhythm consistent */
+    .rhythm-1 { margin-top: calc(var(--rhythm) * 1); margin-bottom: calc(var(--rhythm) * 1); }
+    .rhythm-2 { margin-top: calc(var(--rhythm) * 2); margin-bottom: calc(var(--rhythm) * 2); }
 
     /* Hero Section - Full Bleed */
-    .hero {
-        position: relative;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+    .hero { position: relative; width: 100%; margin: 0; padding: 0; }
 
-    .hero-image {
-        width: 100%;
-        height: 90vh;
-        display: block;
-        transform: scaleX(-1);
-        object-fit: cover;
-        object-position: bottom center;
-    }
-
-    @media (max-width: 900px) {
-        .hero-image {
-            height: 80vh;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .hero-image {
-            height: 70vh;
-            object-position: bottom left;
-        }
-    }
+    .hero-image { width: 100%; height: 90vh; display: block; transform: scaleX(-1); object-fit: cover; object-position: bottom center; }
+    @media (max-width: 900px) { .hero-image { height: 80vh; } }
+    @media (max-width: 600px) { .hero-image { height: 70vh; object-position: bottom left; } }
 
     /* Pattern overlay at top of hero */
-    .pattern-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 5;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem 0;
-    }
+    .pattern-overlay { position: absolute; top: 0; left: 0; right: 0; z-index: 5; display:flex; justify-content:center; align-items:center; padding: 1rem 0; }
+    @media (max-width:900px){ .pattern-overlay{ gap:1rem; padding:0.75rem 0; } }
 
-    @media (max-width: 900px) {
-        .pattern-overlay {
-            gap: 1rem;
-            padding: 0.75rem 0;
-        }
-    }
+    .pattern-left, .pattern-right { flex:1; height:50px; background-repeat:repeat-x; background-size:auto 50px; background-position:center; opacity:0.8; mix-blend-mode: color-dodge; }
+    .pattern-left{ background-image:url('/assets/pattern.svg'); } .pattern-right{ background-image:url('/assets/pattern.svg'); }
 
-    @media (max-width: 600px) {
-        .pattern-overlay {
-            gap: 0.5rem;
-            padding: 0.5rem 0;
-        }
-    }
-
-    .pattern-left,
-    .pattern-right {
-        flex: 1;
-        height: 50px;
-        background-repeat: repeat-x;
-        background-size: auto 50px;
-        background-position: center;
-        opacity: 0.8;
-        mix-blend-mode: color-dodge;
-    }
-
-    .pattern-left {
-        background-image: url("/assets/pattern.svg");
-    }
-
-    .pattern-right {
-        background-image: url("/assets/pattern.svg");
-    }
-
-    .arabic-text {
+    /* Arabic label: keep font but neutralize tight tracking and ensure proper line-height */
+    .arabic-text{
         color: #f6ffcd;
         font-size: 1.25rem;
-        letter-spacing: normal; /* Arabic scripts generally look better without negative tracking */
+        letter-spacing: normal; /* don't squeeze Arabic */
         white-space: nowrap;
         opacity: 0.95;
         mix-blend-mode: color-dodge;
-        text-align: center;
-        padding: 0 2rem;
-        flex-shrink: 0;
+        text-align:center;
+        padding:0 2rem;
+        flex-shrink:0;
     }
 
-    @media (max-width: 900px) {
-        .arabic-text {
-            font-size: 1rem;
-        }
-    }
+    @media (max-width:900px){ .arabic-text{ font-size:1rem; } }
+    @media (max-width:600px){ .arabic-text{ font-size:0.875rem; letter-spacing:0.12em; } }
+    @media (max-width:400px){ .arabic-text{ font-size:0.75rem;} }
 
-    @media (max-width: 600px) {
-        .arabic-text {
-            font-size: 0.875rem;
-            letter-spacing: 0.15em;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .arabic-text {
-            font-size: 0.75rem;
-        }
-    }
-
-    .hero-subtext {
-        margin-top: 1em;
-        margin-bottom: 1em;
-        white-space: nowrap;
-        font-weight: 600;
-    }
+    .hero-subtext{ margin-top: calc(var(--rhythm) * 0.25); margin-bottom: calc(var(--rhythm) * 0.5); white-space: nowrap; font-weight: var(--lead-weight); }
 
     /* Hero content overlay */
-    .hero-overlay {
-        position: absolute;
-        top: 20%;
-        left: 6%;
-        z-index: 10;
-        max-width: 75%;
-    }
+    .hero-overlay{ position:absolute; top:20%; left:6%; z-index:10; max-width:75%; }
+    @media (max-width:900px){ .hero-overlay{ top:40%; left:5%; } }
+    @media (max-width:600px){ .hero-overlay{ top:20%; left:4%; max-width:70%; } }
 
-    @media (max-width: 1200px) {
-        .hero-overlay {
-            max-width: 75%;
-        }
-    }
+    .logo{ width:350px; height:auto; margin-bottom: calc(var(--rhythm) * 0.5); display:block; }
+    @media (max-width:1200px){ .logo{ width:240px; } }
+    @media (max-width:900px){ .logo{ width:200px; margin-bottom: calc(var(--rhythm) * 0.6); } }
+    @media (max-width:600px){ .logo{ width:160px; } }
 
-    @media (max-width: 900px) {
-        .hero-overlay {
-            max-width: 75%;
-            top: 40%;
-            left: 5%;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .hero-overlay {
-            max-width: 70%;
-            top: 20%;
-            left: 4%;
-        }
-    }
-
-    .logo {
-        width: 350px;
-        height: auto;
-        margin-bottom: 1rem;
-        margin-left: 0;
-        display: block;
-    }
-
-    @media (max-width: 1200px) {
-        .logo {
-            width: 240px;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .logo {
-            width: 200px;
-            margin-bottom: 1.8rem;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .logo {
-            width: 160px;
-        }
-    }
-
-    h1 {
-        /* Use clamp for responsive scaling and Tenor Sans for display */
-        font-family: var(--font-display);
-        font-weight: 400;
-        font-size: clamp(1.5rem, 2.2vw + 1.2rem, 3rem);
-        line-height: 1.15;
+    /* HEADINGS: keep Tenor Sans but establish clear spacing and weight rhythm */
+    h1{
+        font-family: "Tenor Sans", serif;
+        font-weight: var(--heading-weight);
+        font-size: 3rem;
+        line-height: 1.12; /* tight for display but still legible */
         color: #f6ffcd;
-        margin-bottom: 1rem;
+        margin: 0 0 calc(var(--rhythm) * 0.5) 0; /* space after heading equals half rhythm */
         letter-spacing: -0.01em;
-        text-align: left;
+        text-align:left;
     }
+    @media (max-width:1200px){ h1{ font-size:2.75rem; } }
+    @media (max-width:900px){ h1{ font-size:2.2rem; } }
+    @media (max-width:600px){ h1{ font-size:1.7rem; line-height:1.25; margin-bottom: calc(var(--rhythm) * 0.3); } }
 
-    @media (max-width: 600px) {
-        h1 {
-            margin-bottom: 0.5rem;
-        }
-    }
-
-    .gentle {
-        font-family: var(--font-accent);
-        font-weight: 600; /* give the word Gentle a slightly stronger weight for emphasis */
-        font-style: normal;
-    }
+    /* Use the accent Nunito for single-word emphasis, but with stronger weight for contrast */
+    .gentle{ font-family: "Nunito", sans-serif; font-weight:700; letter-spacing:0.01em; }
 
     /* CTA Button with Pattern Border */
-    .button-center {
-        text-align: center;
-        margin-top: 2rem;
+    .button-center{ text-align:center; margin-top: calc(var(--rhythm) * 0.5); }
+    .button-wrapper{ position:relative; display:inline-block; padding:0; background:transparent; }
+    .cta-button{
+        position:relative; z-index:1; background:#f6543e; color:#fff; border:none; padding:1.05rem 2.5rem; font-size:1.05rem; font-family:"Tenor Sans", serif; font-weight:600; cursor:pointer; transition:background 0.25s ease; letter-spacing:0.02em; display:inline-block; box-shadow: inset 0 0 0 8px #f6543e, inset 0 0 0 10px #f6ffcd; text-decoration:none; border-radius:6px;
+    }
+    .cta-button:hover{ background:#e54738; }
+
+    /* Content Sections: use rhythm-based padding and an optimal measure for readable lines */
+    .content-section{ background:transparent; padding: calc(var(--rhythm) * 2) 0; text-align:center; }
+    @media (max-width:900px){ .content-section{ padding: calc(var(--rhythm) * 1.2) 1.5rem; } }
+    @media (max-width:600px){ .content-section{ padding: calc(var(--rhythm) * 1) 1.5rem; } }
+
+    .cta-spacing{ padding-bottom: calc(var(--rhythm) * 4); }
+    @media (max-width:900px){ .cta-spacing{ padding-bottom: calc(var(--rhythm) * 3); } }
+    @media (max-width:600px){ .cta-spacing{ padding-bottom: calc(var(--rhythm) * 2); } }
+
+    .section-title{
+        display:flex; justify-content:center; align-items:center; margin-bottom: calc(var(--rhythm) * 0.75); width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;
     }
 
-    .button-wrapper {
-        position: relative;
-        display: inline-block;
-        padding: 0;
-        background: transparent;
-    }
+    .title-pattern-left, .title-pattern-right{ flex:1; height:50px; background-repeat:repeat-x; background-size:auto 50px; background-position:center; opacity:0.8; mix-blend-mode: normal; filter: brightness(0) invert(1); }
+    .title-pattern-left{ background-image:url('/assets/pattern.svg'); } .title-pattern-right{ background-image:url('/assets/pattern.svg'); }
 
-    .cta-button {
-        position: relative;
-        z-index: 1;
-        background: #f6543e;
-        color: #ffffff;
-        border: none;
-        padding: 1.1rem 3rem;
-        font-size: 1.1rem;
-        font-family: var(--font-display);
-        font-weight: 400;
-        cursor: pointer;
-        transition: background 0.3s ease;
-        letter-spacing: 0.02em;
-        display: inline-block;
-        box-shadow:
-            inset 0 0 0 8px #f6543e,
-            inset 0 0 0 10px #f6ffcd;
-        text-decoration: none;
-    }
-
-    @media (max-width: 600px) {
-        .cta-button {
-            padding: 0.875rem 2rem;
-            font-size: 1rem;
-        }
-    }
-
-    .cta-button:hover {
-        background: #e54738;
-    }
-
-    /* Content Sections */
-    .content-section {
-        background: transparent;
-        padding: 8rem 0;
-        text-align: center;
-    }
-
-    @media (max-width: 900px) {
-        .content-section {
-            padding: 6rem 1.5rem;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .content-section {
-            padding: 5rem 1.5rem;
-        }
-    }
-
-    .cta-spacing {
-        padding-bottom: 10rem;
-    }
-
-    @media (max-width: 900px) {
-        .cta-spacing {
-            padding-bottom: 8rem;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .cta-spacing {
-            padding-bottom: 6rem;
-        }
-    }
-
-    .section-title {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 2rem;
-        width: 100vw;
-        position: relative;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
-    }
-
-    .title-pattern-left,
-    .title-pattern-right {
-        flex: 1;
-        height: 50px;
-        background-repeat: repeat-x;
-        background-size: auto 50px;
-        background-position: center;
-        opacity: 0.8;
-        mix-blend-mode: normal;
-        filter: brightness(0) invert(1);
-    }
-
-    .title-pattern-left {
-        background-image: url("/assets/pattern.svg");
-    }
-
-    .title-pattern-right {
-        background-image: url("/assets/pattern.svg");
-    }
-
-    h2 {
-        font-family: var(--font-display);
-        font-size: clamp(1.5rem, 1.6vw + 1.1rem, 2.5rem);
-        font-weight: 400;
-        letter-spacing: 0.02em;
-        color: var(--color-text);
-        line-height: 1.25;
-        margin: 0;
-        white-space: nowrap;
-        text-align: center;
-        padding: 0 2rem;
-        flex-shrink: 0;
-    }
-
-    .subsection-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--color-text);
-        margin-top: 3rem;
-        text-align: left;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 2rem;
-        max-width: 800px;
-    }
-
-    .content-section .cta-button {
-        margin-top: 1rem;
-    }
-
-    .body-text {
-        font-size: clamp(0.95rem, 1rem + 0.2vw, 1.125rem);
-        line-height: 1.75; /* improve readability for long lines */
-        color: var(--color-muted);
-        margin-bottom: 2.5rem;
+    h2{
+        font-family: "Tenor Sans", serif;
+        font-size: 2.25rem;
+        font-weight:600; /* stronger weight for section headings */
         letter-spacing: 0.01em;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
+        color: var(--color-text);
+        line-height:1.2;
+        margin: 0;
+        text-align:center;
         padding: 0 2rem;
-        text-align: left;
+        flex-shrink:0;
+    }
+    @media(max-width:1200px){ h2{ font-size:2rem; } }
+    @media(max-width:900px){ h2{ font-size:1.8rem; } }
+    @media(max-width:600px){ h2{ font-size:1.5rem; } }
+
+    .subsection-title{ font-size:1.125rem; font-weight:700; color:var(--color-text); margin-top: calc(var(--rhythm) * 1); text-align:left; margin-left:auto; margin-right:auto; padding:0 2rem; max-width:var(--measure); }
+
+    .content-section .cta-button{ margin-top: calc(var(--rhythm) * 0.5); }
+
+    /* BODY TEXT: tuned for measure, line-length, rhythm and legibility */
+    .body-text{
+        font-size: 1.0625rem; /* slightly larger base for comfortable reading */
+        line-height: 1.72; /* tuned to match rhythm */
+        color: var(--color-muted);
+        margin-bottom: calc(var(--rhythm) * 0.5);
+        letter-spacing: 0.01em;
+        max-width: var(--measure);
+        margin-left:auto; margin-right:auto;
+        padding: 0 2rem;
+        text-align:left;
+        hyphens: auto;
     }
 
-    @media (max-width: 900px) {
-        .body-text {
-            font-size: 1.0625rem;
-        }
-    }
+    /* Paragraph and list spacing to enforce baseline rhythm */
+    .body-text :global(p){ margin: 0 0 calc(var(--rhythm) * 0.45) 0; }
+    .body-text :global(ul), .body-text :global(ol){ margin: 0 0 calc(var(--rhythm) * 0.6) 1.25rem; padding-left: 0.25rem; }
+    .body-text :global(li){ margin-bottom: calc(var(--rhythm) * 0.25); }
 
-    @media (max-width: 600px) {
-        .body-text {
-            font-size: 1rem;
-            margin-bottom: 2rem;
-        }
-    }
+    @media (max-width:900px){ .body-text{ font-size:1.03rem; line-height:1.7; } }
+    @media (max-width:600px){ .body-text{ font-size:1rem; line-height:1.65; } }
 
-    @media (max-width: 400px) {
-        .body-text {
-            font-size: 0.9375rem;
-        }
-    }
+    /* Fine-tune inline elements for better legibility */
+    .body-text :global(strong){ font-weight:700; }
+    .body-text :global(em){ font-style: italic; }
 
-    .section-title + .body-text {
-        margin-top: 5rem;
-    }
-
-    .subsection-title + .body-text {
-        margin-top: 0;
-    }
+    .section-title + .body-text{ margin-top: calc(var(--rhythm) * 1.25); }
+    .subsection-title + .body-text{ margin-top: calc(var(--rhythm) * 0.25); }
 
     /* MDX Content Styles */
-    .body-text :global(h3) {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--color-text);
-        margin-top: 3rem;
-        margin-bottom: 1rem;
-        text-align: left;
-    }
+    .body-text :global(h3){ font-size:1.125rem; font-weight:700; color:var(--color-text); margin-top: calc(var(--rhythm) * 1); margin-bottom: calc(var(--rhythm) * 0.4); text-align:left; }
 
-    .body-text :global(p) {
-        margin-bottom: 1rem;
-    }
-
-    .body-text :global(p:last-child) {
-        margin-bottom: 0;
-    }
-
-    .body-text :global(strong) {
-        font-weight: 700;
-    }
-
-    .body-text :global(em) {
-        font-style: italic;
-    }
-
-    .body-text :global(br) {
-        display: block;
-        content: "";
-        margin-top: 0.5rem;
-    }
+    .body-text :global(p:last-child){ margin-bottom:0; }
 
     /* Footer */
-    .footer {
-        background: transparent;
-        padding: 0;
-        text-align: center;
-    }
+    .footer{ background:transparent; padding:0; text-align:center; }
+    .footer-logo{ width:100%; max-width:600px; height:auto; margin:0 auto; display:block; opacity:0.8; mix-blend-mode: color-burn; }
+    @media(max-width:600px){ .footer-logo{ max-width:90%; } }
 
-    .footer-logo {
-        width: 100%;
-        max-width: 600px;
-        height: auto;
-        margin: 0 auto;
-        display: block;
-        opacity: 0.8;
-        mix-blend-mode: color-burn;
-    }
-
-    @media (max-width: 600px) {
-        .footer-logo {
-            max-width: 90%;
-        }
-    }
 </style>
